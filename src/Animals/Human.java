@@ -6,27 +6,79 @@
 package Animals;
 import Worlds.World;
 import jolaria.Organism;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JFrame;
 /**
  *
  * @author Materson
  */
-public class Human extends Animal{
-//    #include"Human.h"
-//    #include"Animal.h"
-//    #include"World.h"
-//    #include<conio.h>
-//    #include"config.h"
-//
-//    #define UP 72
-//    #define DOWN 80
-//    #define LEFT 75
-//    #define RIGHT 77
-//    #define ESC 27
-
+public class Human extends Animal implements KeyListener{
     public Human(int power, int activity, World world, int x, int y)
     {
             super(power, activity, world, x, y);
             image = 'H';
+            JFrame h = new JFrame();
+            h.addKeyListener(this);
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent evt) {
+    }
+ 
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        switch( keyCode ) { 
+            case KeyEvent.VK_UP:
+                if (skill > 0)
+                        fire(0, -1);
+                else
+                        super.action(0, -1);
+                break;
+            case KeyEvent.VK_DOWN:
+                if (skill > 0)
+                        fire(0, 1);
+                else
+                        super.action(0, 1);
+                break;
+            case KeyEvent.VK_LEFT:
+                if (skill > 0)
+                        fire(-1, 0);
+                else
+                        super.action(-1, 0);
+                break;
+            case KeyEvent.VK_RIGHT :
+                if (skill > 0)
+                        fire(1, 0);
+                else
+                        super.action(1, 0);
+                break;
+            case KeyEvent.VK_SPACE :
+                if (skill > 0)
+                        fire();
+                else if (skill == 0)
+                {
+                        world.addComment(String.valueOf(image), "actived fire");
+                        skill = 5;
+                        image = 'O';
+                        fire();
+                }
+                else if (skill < 0)
+                {
+                        world.addComment("Fire light up;", String.valueOf((-1)*skill - 1) + " to ignite");
+
+                }
+                break;
+            case KeyEvent.VK_ESCAPE :
+                world.endGame();
+                break;
+         }
+    }
+ 
+    @Override
+    public void keyTyped(KeyEvent evt) {
+ 
     }
 
     protected void finalize()
@@ -36,64 +88,6 @@ public class Human extends Animal{
 
     public void action(int dx, int dy)
     {
-
-            boolean move = false;
-            int zn = 0;
-            while (!move)
-            {
-                    zn = 0;
-                    move = true;
-                    //zn = getch();
-                    switch (zn)
-                    {
-//                    case UP:
-//                            if (skill > 0)
-//                                    fire(0, -1);
-//                            else
-//                                    super.action(0, -1);
-//                            break;
-//                    case RIGHT:
-//                            if (skill > 0)
-//                                    fire(1, 0);
-//                            else
-//                                    super.action(1, 0);
-//                            break;
-//                    case DOWN:
-//                            if (skill > 0)
-//                                    fire(0, 1);
-//                            else
-//                                    super.action(0, 1);
-//                            break;
-//                    case LEFT:
-//                            if (skill > 0)
-//                                    fire(-1, 0);
-//                            else
-//                                    super.action(-1, 0);
-//                            break;
-//                    case ESC:
-//                            world.endGame();
-//                            break;
-                    case ' ':
-                            if (skill > 0)
-                                    fire();
-                            else if (skill == 0)
-                            {
-                                    world.addComment(String.valueOf(image), "actived fire");
-                                    skill = 5;
-                                    image = 'O';
-                                    fire();
-                            }
-                            else if (skill < 0)
-                            {
-                                    world.addComment("Fire light up;", String.valueOf((-1)*skill - 1) + " to ignite");
-
-                            }
-                            break;
-                    default:
-                            move = false;
-                    }
-            }
-
             if (skill < 0) skill++;
     }
 

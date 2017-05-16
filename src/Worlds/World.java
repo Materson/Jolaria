@@ -202,7 +202,7 @@ public class World {
 
     public void fillWorld()
     {
-            String organism = "abXfgGmstw";
+            String organism = "abXHfgGmstw";
             int h_x = -1, h_y = -1;
             for (int i = 0; i < organism.length(); i++)
             {
