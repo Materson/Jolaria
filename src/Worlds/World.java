@@ -6,6 +6,7 @@
 package Worlds;
 import java.util.Random;
 import jolaria.Organism;
+import Animals.*;
 /**
  *
  * @author Materson
@@ -23,7 +24,7 @@ public class World {
     private static final int COMMENTS_AMOUNT = 10;
     private static final int FILL_RATIO = 5;
 
-    World(int width, int height)
+    public World(int width, int height)
     {
 
             this.width = width;
@@ -97,7 +98,7 @@ public class World {
     //				if (map[j / 2][i / 2] == null)
     //					cout << " ";
     //				else
-    //					map[j / 2][i / 2]->draw();
+    //					map[j / 2][i / 2].draw();
     //			}
     //		}
     //		cout << endl;
@@ -125,7 +126,7 @@ public class World {
     }
 
     //set x, y at free place and return 1, otherwise return 0
-    public int findFreeSpace(int x, int y, int range)
+    public boolean findFreeSpace(int x, int y, int range)
     {
             int dx[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
             int dy[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
@@ -140,10 +141,10 @@ public class World {
 
                             x += (dx[i] * j);
                             y += (dy[i] * j);
-                            return 1;
+                            return true;
                     }
             }
-            return 0;
+            return false;
     }
 
     public int randInt(int min, int max)
@@ -157,38 +158,38 @@ public class World {
             switch (image)
             {
             case 'w':
-                    map[x][y] = new Wolf(W_POWER, W_ACTIVITY, this, x, y);
+                    map[x][y] = new Wolf(9, 5, this, x, y);
                     break;
             case 's':
-                    map[x][y] = new Sheep(S_POWER, S_ACTIVITY, this, x, y);
+                    map[x][y] = new Sheep(4, 4, this, x, y);
                     break;
             case 'f':
-                    map[x][y] = new Fox(F_POWER, F_ACTIVITY, this, x, y);
+                    map[x][y] = new Fox(3, 7, this, x, y);
                     break;
             case 't':
-                    map[x][y] = new Turtle(T_POWER, T_ACTIVITY, this, x, y);
+                    map[x][y] = new Turtle(2, 1, this, x, y);
                     break;
             case 'a':
-                    map[x][y] = new Antelope(A_POWER, A_ACTIVITY, this, x, y);
+                    map[x][y] = new Antelope(4, 4, this, x, y);
                     break;
             case 'H':
-                    map[x][y] = new Human(H_POWER, H_ACTIVITY, this, x, y);
+                    map[x][y] = new Human(5, 5, this, x, y);
                     break;
-            case 'g':
-                    map[x][y] = new Grass(G_POWER, this, x, y);
-                    break;
-            case 'm':
-                    map[x][y] = new Milk(M_POWER, this, x, y);
-                    break;
-            case 'G':
-                    map[x][y] = new Guarana(GU_POWER, this, x, y);
-                    break;
-            case 'b':
-                    map[x][y] = new Berry(X_POWER, this, x, y);
-                    break;
-            case 'X':
-                    map[x][y] = new Borscht(X_POWER, this, x, y);
-                    break;
+//            case 'g':
+//                    map[x][y] = new Grass(0, this, x, y);
+//                    break;
+//            case 'm':
+//                    map[x][y] = new Milk(0, this, x, y);
+//                    break;
+//            case 'G':
+//                    map[x][y] = new Guarana(0, this, x, y);
+//                    break;
+//            case 'b':
+//                    map[x][y] = new Berry(99, this, x, y);
+//                    break;
+//            case 'X':
+//                    map[x][y] = new Borscht(10, this, x, y);
+//                    break;
             default:
                     map[x][y] = null;
                     orgNum--;
@@ -228,7 +229,7 @@ public class World {
                                     int rand_org = randInt(1, 100) % organism.length();
                                     addOrganism(organism.charAt(rand_org), j, i);
                                     if (organism.charAt(rand_org) != ' ')
-                                            addComment(organism.charAt(rand_org), "created", "");
+                                            addComment(String.valueOf(organism.charAt(rand_org)), "created", "");
                             }
                             else
                             {
@@ -239,6 +240,21 @@ public class World {
 
 
     }
+    
+    public void delOrganism(Organism org)
+    {
+        if(map[org.getX()][org.getY()] == org)
+                    map[org.getX()][org.getY()] = null;
+        for (int i = 0; i < orgNum; i++)
+        {
+                if (order[i] == org)
+                {
+                        order[i] = null;
+                        break;
+                }
+        }
+        orgNum--;
+    }
 
     public void delOrganism(Organism org, int x, int y)
     {
@@ -246,18 +262,7 @@ public class World {
             {
                     org = map[x][y];
             }
-
-            if(map[org.getX()][org.getY()] == org)
-                    map[org.getX()][org.getY()] = null;
-            for (int i = 0; i < orgNum; i++)
-            {
-                    if (order[i] == org)
-                    {
-                            order[i] = null;
-                            break;
-                    }
-            }
-            orgNum--;
+            delOrganism(org);            
     }
 
     public void setOrder()
@@ -286,15 +291,15 @@ public class World {
 //            else if(org1 == null && org2 != null)
 //                    return 1;
 //
-//            if (org1->getActivity() > org2->getActivity())
+//            if (org1.getActivity() > org2.getActivity())
 //                    return -1;
-//            else if (org1->getActivity() < org2->getActivity())
+//            else if (org1.getActivity() < org2.getActivity())
 //                    return 1;
 //            else
 //            {
-//                    if (org1->getOld() > org2->getOld())
+//                    if (org1.getOld() > org2.getOld())
 //                            return -1;
-//                    else if (org1->getOld() < org2->getOld())
+//                    else if (org1.getOld() < org2.getOld())
 //                            return 1;
 //            }
 //
@@ -310,8 +315,9 @@ public class World {
     {
             if (map[x][y] != null)
             {
-                    return map[x][y]->getPower();
+                    return map[x][y].getPower();
             }
+            return 0;
     }
 
     public int checkOrganismActivity(int x, int y)
@@ -346,6 +352,14 @@ public class World {
     public void addComment(String org1, String action, String org2)
     {
             comments[comment_i] = org1 + " " + action + " " + org2;
+            comment_i++;
+            comment_i = comment_i % (COMMENTS_AMOUNT);
+            comments[comment_i] = "*********************************";
+    }
+    
+    public void addComment(String org1, String action)
+    {
+            comments[comment_i] = org1 + " " + action;
             comment_i++;
             comment_i = comment_i % (COMMENTS_AMOUNT+1);
             comments[comment_i] = "*********************************";
