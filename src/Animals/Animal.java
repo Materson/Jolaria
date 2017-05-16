@@ -24,9 +24,9 @@ public class Animal extends Organism{
         
         public void action()
         {
-            int move_dx=0, move_dy=0;
-            randMove(move_dx, move_dy, 1);
-            action(move_dx, move_dy);
+           Position pos = new Position();
+            randMove(pos, 1);
+            action(pos.x, pos.y);
         }
 
 	public void action(int move_dx, int move_dy)

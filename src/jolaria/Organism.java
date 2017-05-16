@@ -5,7 +5,6 @@
  */
 package jolaria;
 import Worlds.World;
-import jolaria.Organism;
 
 /**
  *
@@ -82,7 +81,7 @@ public abstract class Organism {
             power = x;
     }
 
-    public void randMove(int move_x, int move_y, int range)
+    public void randMove(Position pos, int range)
     {
             int tmpx[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
             int tmpy[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
@@ -118,8 +117,8 @@ public abstract class Organism {
 
                     findPlace = true;
                     place = move[place];
-                    move_x = dx[place];
-                    move_y = dy[place];
+                    pos.x = dx[place];
+                    pos.y = dy[place];
             }
     }
 }

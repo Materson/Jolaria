@@ -16,11 +16,12 @@ public class Milk extends Plant{
 	image = 'm';
 }
 
-public void action(int dx, int dy)
+    @Override
+    public void action(int dx, int dy)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		super.action();
+		super.action(dx, dy);
 	}
 }
 

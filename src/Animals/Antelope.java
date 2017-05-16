@@ -21,8 +21,9 @@ public Antelope(int power, int activity, World world, int x, int y)
 
 public void action(int dx, int dy)
 {
-	randMove(dx, dy, 2);
-	super.action(dx, dy);
+        Position pos = new Position();
+	randMove(pos, 2);
+	super.action(pos.x, pos.y);
 }
 
 public void action()

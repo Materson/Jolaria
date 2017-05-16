@@ -7,6 +7,7 @@ package Worlds;
 import java.util.Random;
 import jolaria.Organism;
 import Animals.*;
+import Plants.*;
 import jolaria.Position;
 /**
  *
@@ -176,21 +177,21 @@ public class World {
             case 'H':
                     map[x][y] = new Human(5, 5, this, x, y);
                     break;
-//            case 'g':
-//                    map[x][y] = new Grass(0, this, x, y);
-//                    break;
-//            case 'm':
-//                    map[x][y] = new Milk(0, this, x, y);
-//                    break;
-//            case 'G':
-//                    map[x][y] = new Guarana(0, this, x, y);
-//                    break;
-//            case 'b':
-//                    map[x][y] = new Berry(99, this, x, y);
-//                    break;
-//            case 'X':
-//                    map[x][y] = new Borscht(10, this, x, y);
-//                    break;
+            case 'g':
+                    map[x][y] = new Grass(0, this, x, y);
+                    break;
+            case 'm':
+                    map[x][y] = new Milk(0, this, x, y);
+                    break;
+            case 'G':
+                    map[x][y] = new Guarana(0, this, x, y);
+                    break;
+            case 'b':
+                    map[x][y] = new Berry(99, this, x, y);
+                    break;
+            case 'X':
+                    map[x][y] = new Borscht(10, this, x, y);
+                    break;
             default:
                     map[x][y] = null;
                     orgNum--;
@@ -201,7 +202,7 @@ public class World {
 
     public void fillWorld()
     {
-            String organism = "HabXfgGmstw";
+            String organism = "abXfgGmstw";
             int h_x = -1, h_y = -1;
             for (int i = 0; i < organism.length(); i++)
             {
@@ -362,7 +363,7 @@ public class World {
     {
             comments[comment_i] = org1 + " " + action;
             comment_i++;
-            comment_i = comment_i % (COMMENTS_AMOUNT+1);
+            comment_i = comment_i % (COMMENTS_AMOUNT);
             comments[comment_i] = "*********************************";
     }
 

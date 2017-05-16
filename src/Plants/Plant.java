@@ -36,6 +36,12 @@ public class Plant extends Organism{
                     }
             }
     }
+    
+    public void action()
+    {
+        int move_dx=0, move_dy=0;
+        action(move_dx, move_dy);
+    }
 
     public void collision(Organism attacker)
     {

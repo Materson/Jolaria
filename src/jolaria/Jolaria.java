@@ -5,7 +5,7 @@
  */
 package jolaria;
 import Worlds.World;
-
+import java.util.Scanner;
 /**
  *
  * @author Materson
@@ -16,10 +16,25 @@ public class Jolaria {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        World jolaria= new World(5, 5);
+        int h,w;
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Podaj wysokosc planszy: ");
+        h = scan.nextInt();
+        System.out.print("Podaj szerokosc5 planszy: ");
+        w = scan.nextInt();
+        
+        World jolaria= new World(h, w);
         jolaria.nextTurn();
         jolaria.drawWorld();
 	int zn;
+        while (jolaria.humanAlive() || (String)scan.next() == (String)" ")
+	{
+		
+			jolaria.nextTurn();
+			jolaria.drawWorld();
+		
+		if (!jolaria.game()) break;
+	}
 //	while (jolaria.humanAlive() || ((zn=getch()) != ESC))
 //	{
 //		if (jolaria.humanAlive() || zn == ' ')
