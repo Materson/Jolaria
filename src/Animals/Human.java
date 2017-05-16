@@ -8,7 +8,7 @@ import Worlds.World;
 import jolaria.Organism;
 /**
  *
- * @author Marek
+ * @author Materson
  */
 public class Human extends Animal{
 //    #include"Human.h"

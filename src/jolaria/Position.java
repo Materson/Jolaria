@@ -7,7 +7,7 @@ package jolaria;
 
 /**
  *
- * @author mater
+ * @author Materson
  */
 public class Position {
     public int x;

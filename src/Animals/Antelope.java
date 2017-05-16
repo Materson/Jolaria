@@ -9,7 +9,7 @@ import jolaria.Organism;
 import jolaria.Position;
 /**
  *
- * @author Marek
+ * @author Materson
  */
 public class Antelope extends Animal {
 
