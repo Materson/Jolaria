@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package jolaria;
+import Worlds.World;
 
 /**
  *
@@ -15,7 +16,19 @@ public class Jolaria {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        World jolaria= new World(5, 5);
+        jolaria.nextTurn();
+        jolaria.drawWorld();
+	int zn;
+//	while (jolaria.humanAlive() || ((zn=getch()) != ESC))
+//	{
+//		if (jolaria.humanAlive() || zn == ' ')
+//		{
+//			jolaria.nextTurn();
+//			jolaria.drawWorld();
+//		}
+//		if (!jolaria.game()) break;
+//	}
     }
     
 }

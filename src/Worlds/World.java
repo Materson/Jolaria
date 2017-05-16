@@ -7,6 +7,7 @@ package Worlds;
 import java.util.Random;
 import jolaria.Organism;
 import Animals.*;
+import jolaria.Position;
 /**
  *
  * @author Materson
@@ -83,28 +84,28 @@ public class World {
 
     public void drawWorld()
     {
-    //	system("cls");
-    //	cout << "Mateusz Szymanowski, nr:165319" << endl;
-    //	for (int i = 0; i <= height * 2; i++)
-    //	{
-    //		for (int j = 0; j <= width * 2; j++)
-    //		{
-    //			if (i % 2 == 0 && j%2 == 0) cout << "+";
-    //			else if (i % 2 == 0 && j % 2 == 1) cout << "-";
-    //
-    //			if (i % 2 == 1 && j % 2 == 0)cout << "|";
-    //			if (i % 2 == 1 && j % 2 == 1)
-    //			{
-    //				if (map[j / 2][i / 2] == null)
-    //					cout << " ";
-    //				else
-    //					map[j / 2][i / 2].draw();
-    //			}
-    //		}
-    //		cout << endl;
-    //	}
-    //	printComments();
-        System.out.println("Rysuj swiat");
+    	//system("cls");
+    	System.out.println( "Mateusz Szymanowski, nr:165319");
+    	for (int i = 0; i <= height * 2; i++)
+    	{
+    		for (int j = 0; j <= width * 2; j++)
+    		{
+    			if (i % 2 == 0 && j%2 == 0) System.out.print("+");
+    			else if (i % 2 == 0 && j % 2 == 1) System.out.print("-");
+    
+    			if (i % 2 == 1 && j % 2 == 0)System.out.print("|");
+    			if (i % 2 == 1 && j % 2 == 1)
+    			{
+    				if (map[j / 2][i / 2] == null)
+    					System.out.print(" ");
+    				else
+    					map[j / 2][i / 2].draw();
+    			}
+    		}
+    		System.out.println();
+    	}
+    	printComments();
+        System.out.print("\033[H\033[2J");
     }
 
 
@@ -126,7 +127,7 @@ public class World {
     }
 
     //set x, y at free place and return 1, otherwise return 0
-    public boolean findFreeSpace(int x, int y, int range)
+    public boolean findFreeSpace(Position pos, int range)
     {
             int dx[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
             int dy[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
@@ -135,12 +136,12 @@ public class World {
             {
                     for (int i = 0; i < dx.length; i++)
                     {
-                            char place = checkPlace((x) + (dx[i] * j), (y) + (dy[i] * j));
+                            char place = checkPlace((pos.x) + (dx[i] * j), (pos.y) + (dy[i] * j));
                             if (place == '!' || place != ' ')
                                     continue;
 
-                            x += (dx[i] * j);
-                            y += (dy[i] * j);
+                            pos.x += (dx[i] * j);
+                            pos.y += (dy[i] * j);
                             return true;
                     }
             }
@@ -367,7 +368,7 @@ public class World {
 
     public void printComments()
     {
-            for (int i = 0; i < COMMENTS_AMOUNT+1; i++)
+            for (int i = 0; i < COMMENTS_AMOUNT; i++)
             {
                     if(comments[i] != "")
                             System.out.println(comments[i]);
