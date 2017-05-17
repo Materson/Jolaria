@@ -18,7 +18,7 @@ public class RightBar extends JPanel {
         private int height = 700, width = 300;
 	public RightBar() {
 		setPreferredSize(new Dimension(width, height));
-                setLayout(new FlowLayout());
+//                setLayout(new FlowLayout());
                 setBackground(Color.gray);
                 
                 JTextField nameField = new JTextField("Imię");

@@ -18,26 +18,13 @@ public class Graphic extends JFrame {
         setLocation(200,10);
         setResizable(false);
 //        setLayout(new FlowLayout());
-        setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-//        c.fill = GridBagConstraints.BOTH;
+//        setLayout(new BorderLayout());
 
-        JPanel map = new Map(1,3);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 6;
-        c.ipady = 700;
-        add(map,c);
+        JPanel map = new Map(25,25);
+        add(map, BorderLayout.LINE_START);
         
         JPanel menu = new RightBar();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 7;
-        c.gridy = 0;
-        c.gridwidth = 3;
-        c.anchor = GridBagConstraints.LINE_END;
-        
-        add(menu,c);
+        add(menu, BorderLayout.LINE_END);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
