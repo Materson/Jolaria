@@ -15,18 +15,18 @@ public class Graphic extends JFrame {
     {
         super("Jolaria - Mateusz Szymanowski nr:165319");
         setSize(1000, 730);
-        setLocation(200,30);
+        setLocation(200,10);
         setResizable(false);
 //        setLayout(new FlowLayout());
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 //        c.fill = GridBagConstraints.BOTH;
 
-        JPanel map = new Map(9,5);
+        JPanel map = new Map(1,3);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
-        c.weightx = 7;
+        c.gridwidth = 6;
         c.ipady = 700;
         add(map,c);
         
@@ -34,12 +34,11 @@ public class Graphic extends JFrame {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 7;
         c.gridy = 0;
-        c.weightx = 3;
+        c.gridwidth = 3;
         c.anchor = GridBagConstraints.LINE_END;
         
         add(menu,c);
 
-//        pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }

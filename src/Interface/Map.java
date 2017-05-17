@@ -10,7 +10,7 @@ package Interface;
  * @author Materson
  */
 import java.awt.*;
-import java.awt.geom.*;
+import javax.swing.*;
 
 import javax.swing.JPanel;
 
@@ -21,8 +21,9 @@ public class Map extends JPanel {
 		setPreferredSize(new Dimension(map_width, map_height));
                 width = w;
                 height = h;
-                setLayout(new FlowLayout());
                 setBackground(Color.BLUE);
+//                setLayout(new GridBagLayout());
+                setLayout(new GridLayout(w,h));
 	}
 
 	@Override
@@ -30,12 +31,23 @@ public class Map extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
                 g.setColor(Color.BLACK);
+                GridBagConstraints c = new GridBagConstraints();
                 for(int i=0; i<height; i++)
                 {
                     for(int j=0; j<width; j++)
                     {
-                        Rectangle2D rectangle = new Rectangle2D.Double(j*map_height/width, i*map_width/height, map_width/width, map_height/height);
-                        g2d.draw(rectangle);
+                        JButton btn = new JButton(String.valueOf(j)+","+String.valueOf(i));
+                        btn.setBackground(Color.red);
+                        btn.setPreferredSize(new Dimension(map_width/width, map_height/height));
+//                        btn.setLocation(j*map_height/width, i*map_width/height);
+//                        c.gridx = j;
+//                        c.gridy = i;
+//                        c.anchor = GridBagConstraints.FIRST_LINE_START;
+                        add(btn);
+//                        c.fill = GridBagConstraints.BOTH;
+//                        Rectangle2D rectangle = new Rectangle2D.Double(j*map_height/width, i*map_width/height, map_width/width, map_height/height);
+//                        g2d.draw(rectangle);
+                        
                     }
                 }
 	}
