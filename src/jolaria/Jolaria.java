@@ -24,16 +24,10 @@ public class Jolaria {
                 new Graphic();
             }
         });
-        int h,w;
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Podaj wysokosc planszy: ");
-        h = scan.nextInt();
-        System.out.print("Podaj szerokosc5 planszy: ");
-        w = scan.nextInt();
         
-        World jolaria= new World(h, w);
-        jolaria.nextTurn();
-        jolaria.drawWorld();
+        
+//        jolaria.nextTurn();
+//        jolaria.drawWorld();
 	int zn;
 //        while (jolaria.humanAlive() || (String)scan.next() == (String)" ")
 //	{

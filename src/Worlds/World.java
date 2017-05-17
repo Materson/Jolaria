@@ -7,6 +7,7 @@ package Worlds;
 import java.util.Random;
 import jolaria.Organism;
 import Animals.*;
+import Interface.RightBar;
 import Plants.*;
 import jolaria.Position;
 /**
@@ -25,10 +26,11 @@ public class World {
     private Organism[] order;
     private static final int COMMENTS_AMOUNT = 10;
     private static final int FILL_RATIO = 5;
+    private RightBar menu;
 
-    public World(int width, int height)
+    public World(int width, int height, RightBar menu)
     {
-
+            this.menu = menu;
             this.width = width;
             this.height = height;
             map = new Organism[width][height];
@@ -38,6 +40,11 @@ public class World {
             drawWorld();
             order = new Organism[width*height];
             setOrder();
+    }
+    
+    public Organism getOrganism(int x, int y)
+    {
+        return map[x][y];
     }
 
     //~World()
@@ -213,10 +220,11 @@ public class World {
                                     h_x = randInt(0, width);
                                     h_y = randInt(0, height);
                                     addOrganism('H', h_x, h_y);
-                                    addComment("H", "created","");
+                                    addComment("H", "created");
                                     human = true;
                             }
-                            organism.replace("H", " ");
+                            organism = organism.replace('H', ' ');
+                            break;
                     }
             }
 
@@ -357,6 +365,7 @@ public class World {
             comment_i++;
             comment_i = comment_i % (COMMENTS_AMOUNT);
             comments[comment_i] = "*********************************";
+            menu.addComment(org1 + " " + action + " " + org2);
     }
     
     public void addComment(String org1, String action)
@@ -365,6 +374,7 @@ public class World {
             comment_i++;
             comment_i = comment_i % (COMMENTS_AMOUNT);
             comments[comment_i] = "*********************************";
+            menu.addComment(org1 + " " + action);
     }
 
     public void printComments()

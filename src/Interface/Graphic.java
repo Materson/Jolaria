@@ -11,7 +11,8 @@ import javax.swing.*;
  * @author Materson
  */
 public class Graphic extends JFrame {
-    JPanel map;
+    Map map;
+    private RightBar menu;
     public Graphic()
     {
         super("Jolaria - Mateusz Szymanowski nr:165319");
@@ -19,7 +20,7 @@ public class Graphic extends JFrame {
         setLocation(200,10);
         setResizable(false);
         
-        JPanel menu = new RightBar(this);
+        menu = new RightBar(this);
         add(menu, BorderLayout.LINE_END);
 //        JPanel map = new Map(25,25);
 //        add(map, BorderLayout.LINE_START);
@@ -30,7 +31,7 @@ public class Graphic extends JFrame {
     
     public void createMap(int w, int h)
     {
-        map = new Map(w,h);
+        map = new Map(w,h, menu);
         add(map, BorderLayout.LINE_START);
     }
 }
