@@ -24,19 +24,16 @@ public class Map extends JPanel {
                 height = h;
                 setBackground(Color.BLUE);
                 setLayout(new GridLayout(h,w));
+                createButtons();
 	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-                g.setColor(Color.BLACK);
+	protected void createButtons() {
                 for(int i=0; i<height; i++)
                 {
                     for(int j=0; j<width; j++)
                     {
                         JButton btn = new JButton(String.valueOf(j)+","+String.valueOf(i));
-                        btn.setBackground(Color.red);
+                        btn.setBackground(Color.WHITE);
                         add(btn);
                         
                     }
