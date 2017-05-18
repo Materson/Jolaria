@@ -80,7 +80,7 @@ public class World  {
             return width;
     }
 
-    public void nextTurn()
+    public void nextTurn(int dx, int dy)
     {
         for (int i = 7; i >= 0; i--)
         {
@@ -105,7 +105,10 @@ public class World  {
             
             for(int j=0; j<order[i].size(); j++)
             {
-                order[i].get(j).action();
+                if(order[i].get(j) instanceof Human)
+                    order[i].get(j).action(dx,dy);
+                else
+                    order[i].get(j).action();
             }
         }
     }
@@ -439,7 +442,7 @@ public class World  {
             
         } catch(IOException e)
         {
-            break;
+//            break;
         }
     }
 

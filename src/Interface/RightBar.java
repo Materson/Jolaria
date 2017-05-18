@@ -19,8 +19,8 @@ public class RightBar extends JPanel implements ActionListener{
         private static final int heightPanel = 700, widthPanel = 300;
         private int widthMap, heightMap;
         private JTextField widthField, heightField;
-        private JButton createMapButton, nextButton, saveButton, loadButton;
-        private JTextArea commentArea = new JTextArea(5, 20);
+        private JButton createMapButton, nextButton, saveButton, loadButton, closeButton;
+        private JTextArea commentArea = new JTextArea(15, 20);
         Graphic window;
         
 	public RightBar(Graphic window) {
@@ -107,7 +107,11 @@ public class RightBar extends JPanel implements ActionListener{
             }
             else if(source == nextButton)
             {
-                window.map.nextTurn();
+                window.map.nextTurn(0,0);
+            }
+            else if(source == closeButton)
+            {
+                window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             }
         }
         
@@ -134,13 +138,17 @@ public class RightBar extends JPanel implements ActionListener{
             
             JPanel saveLoad = new JPanel();
             saveLoad.setLayout(new GridLayout(1,2));
-            saveButton = new JButton("Nastepna tura");
-            loadButton = new JButton("Nastepna tura");
+            saveButton = new JButton("Zapisz");
+            loadButton = new JButton("Wczytaj");
+            saveButton.addActionListener(this);
             saveButton.addActionListener(this);
             loadButton.addActionListener(this);
             nextTurnPanel.add(saveButton);
             nextTurnPanel.add(loadButton);
-            info.add(nextTurnPanel);
+        info.add(nextTurnPanel);
+            closeButton = new JButton("Zamkinj");
+            closeButton.addActionListener(this);
+            info.add(closeButton, BorderLayout.PAGE_END);
             
             commentArea.setEditable(false);
             JScrollPane scrollPane = new JScrollPane(commentArea); 

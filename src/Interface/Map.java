@@ -21,7 +21,7 @@ import java.awt.geom.*;
 
 import javax.swing.JPanel;
 
-public class Map extends JPanel implements KeyListener{
+public class Map extends JPanel{
         private World jolaria;
         private int width, height;
         private int map_width=700, map_height=700;
@@ -55,9 +55,9 @@ public class Map extends JPanel implements KeyListener{
                 }
 	}
         
-        public void nextTurn()
+        public void nextTurn(int dx, int dy)
         {
-            jolaria.nextTurn();
+            jolaria.nextTurn(dx, dy);
             refresh();
         }
         
@@ -91,63 +91,6 @@ public class Map extends JPanel implements KeyListener{
             {
                 buttons[j][i].setBackground(Color.WHITE);
             }
-        }
-        
-        @Override
-    public void keyPressed(KeyEvent evt) {
-    }
- 
-    @Override
-    public void keyReleased(KeyEvent e) {
-//        int keyCode = e.getKeyCode();
-//        switch( keyCode ) { 
-//            case KeyEvent.VK_UP:
-//                if (skill > 0)
-//                        fire(0, -1);
-//                else
-//                        super.action(0, -1);
-//                break;
-//            case KeyEvent.VK_DOWN:
-//                if (skill > 0)
-//                        fire(0, 1);
-//                else
-//                        super.action(0, 1);
-//                break;
-//            case KeyEvent.VK_LEFT:
-//                if (skill > 0)
-//                        fire(-1, 0);
-//                else
-//                        super.action(-1, 0);
-//                break;
-//            case KeyEvent.VK_RIGHT :
-//                if (skill > 0)
-//                        fire(1, 0);
-//                else
-//                        super.action(1, 0);
-//                break;
-//            case KeyEvent.VK_SPACE :
-//                if (skill > 0)
-//                        fire();
-//                else if (skill == 0)
-//                {
-//                        world.addComment(String.valueOf(image), "actived fire");
-//                        skill = 5;
-//                        image = 'O';
-//                        fire();
-//                }
-//                else if (skill < 0)
-//                {
-//                        world.addComment("Fire light up;", String.valueOf((-1)*skill - 1) + " to ignite");
-//
-//                }
-//                break;
-//            case KeyEvent.VK_ESCAPE :
-//                world.endGame();
-//                break;
-         }
-        @Override
-        public void keyTyped(KeyEvent evt) {
-
         }
     }
  

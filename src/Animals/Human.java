@@ -6,55 +6,59 @@
 package Animals;
 import Worlds.World;
 import jolaria.Organism;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 /**
  *
  * @author Materson
  */
-public class Human extends Animal implements KeyListener{
+public class Human extends Animal{
     public Human(int power, int activity, World world, int x, int y)
     {
             super(power, activity, world, x, y);
             image = 'H';
             JFrame h = new JFrame();
-            h.addKeyListener(this);
     }
     
-    @Override
-    public void keyPressed(KeyEvent evt) {
-    }
- 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch( keyCode ) { 
-            case KeyEvent.VK_UP:
+   public void action(int dx, int dy)
+{
+	char move = ' ';
+        if(dx == 0 && dy == -1) move = 'u';         //UP
+        else if(dx == 1 && dy == 0) move = 'r';     //RIGHT
+        else if(dx == 0 && dy == 1) move = 'd';     //DOWN
+        else if(dx == -1 && dy == 0) move = 'l';    //LEFT
+        else if(dx == -1 && dy == -1) move = 'e';   //ESC
+        else if(dx == 1 && dy == 1) move = 's';     //SPACE
+       
+        switch (move)
+        {
+        case 'u':
                 if (skill > 0)
                         fire(0, -1);
                 else
                         super.action(0, -1);
                 break;
-            case KeyEvent.VK_DOWN:
-                if (skill > 0)
-                        fire(0, 1);
-                else
-                        super.action(0, 1);
-                break;
-            case KeyEvent.VK_LEFT:
-                if (skill > 0)
-                        fire(-1, 0);
-                else
-                        super.action(-1, 0);
-                break;
-            case KeyEvent.VK_RIGHT :
+        case 'r':
                 if (skill > 0)
                         fire(1, 0);
                 else
                         super.action(1, 0);
                 break;
-            case KeyEvent.VK_SPACE :
+        case 'd':
+                if (skill > 0)
+                        fire(0, 1);
+                else
+                        super.action(0, 1);
+                break;
+        case 'l':
+                if (skill > 0)
+                        fire(-1, 0);
+                else
+                        super.action(-1, 0);
+                break;
+        case 'e':
+                world.endGame();
+                break;
+        case 's':
                 if (skill > 0)
                         fire();
                 else if (skill == 0)
@@ -70,25 +74,14 @@ public class Human extends Animal implements KeyListener{
 
                 }
                 break;
-            case KeyEvent.VK_ESCAPE :
-                world.endGame();
-                break;
-         }
-    }
- 
-    @Override
-    public void keyTyped(KeyEvent evt) {
- 
-    }
+        }
+
+	if (skill < 0) skill++;
+}
 
     protected void finalize()
     {
             world.humanDie();
-    }
-
-    public void action(int dx, int dy)
-    {
-            if (skill < 0) skill++;
     }
 
     public void collistion(Organism attacker)
