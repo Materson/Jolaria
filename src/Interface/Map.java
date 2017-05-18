@@ -99,56 +99,55 @@ public class Map extends JPanel implements KeyListener{
  
     @Override
     public void keyReleased(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch( keyCode ) { 
-            case KeyEvent.VK_UP:
-                if (skill > 0)
-                        fire(0, -1);
-                else
-                        super.action(0, -1);
-                break;
-            case KeyEvent.VK_DOWN:
-                if (skill > 0)
-                        fire(0, 1);
-                else
-                        super.action(0, 1);
-                break;
-            case KeyEvent.VK_LEFT:
-                if (skill > 0)
-                        fire(-1, 0);
-                else
-                        super.action(-1, 0);
-                break;
-            case KeyEvent.VK_RIGHT :
-                if (skill > 0)
-                        fire(1, 0);
-                else
-                        super.action(1, 0);
-                break;
-            case KeyEvent.VK_SPACE :
-                if (skill > 0)
-                        fire();
-                else if (skill == 0)
-                {
-                        world.addComment(String.valueOf(image), "actived fire");
-                        skill = 5;
-                        image = 'O';
-                        fire();
-                }
-                else if (skill < 0)
-                {
-                        world.addComment("Fire light up;", String.valueOf((-1)*skill - 1) + " to ignite");
-
-                }
-                break;
-            case KeyEvent.VK_ESCAPE :
-                world.endGame();
-                break;
+//        int keyCode = e.getKeyCode();
+//        switch( keyCode ) { 
+//            case KeyEvent.VK_UP:
+//                if (skill > 0)
+//                        fire(0, -1);
+//                else
+//                        super.action(0, -1);
+//                break;
+//            case KeyEvent.VK_DOWN:
+//                if (skill > 0)
+//                        fire(0, 1);
+//                else
+//                        super.action(0, 1);
+//                break;
+//            case KeyEvent.VK_LEFT:
+//                if (skill > 0)
+//                        fire(-1, 0);
+//                else
+//                        super.action(-1, 0);
+//                break;
+//            case KeyEvent.VK_RIGHT :
+//                if (skill > 0)
+//                        fire(1, 0);
+//                else
+//                        super.action(1, 0);
+//                break;
+//            case KeyEvent.VK_SPACE :
+//                if (skill > 0)
+//                        fire();
+//                else if (skill == 0)
+//                {
+//                        world.addComment(String.valueOf(image), "actived fire");
+//                        skill = 5;
+//                        image = 'O';
+//                        fire();
+//                }
+//                else if (skill < 0)
+//                {
+//                        world.addComment("Fire light up;", String.valueOf((-1)*skill - 1) + " to ignite");
+//
+//                }
+//                break;
+//            case KeyEvent.VK_ESCAPE :
+//                world.endGame();
+//                break;
          }
+        @Override
+        public void keyTyped(KeyEvent evt) {
+
+        }
     }
  
-    @Override
-    public void keyTyped(KeyEvent evt) {
- 
-    }
-}

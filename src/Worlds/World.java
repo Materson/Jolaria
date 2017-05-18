@@ -9,12 +9,16 @@ import jolaria.Organism;
 import Animals.*;
 import Interface.RightBar;
 import Plants.*;
+import java.util.List;
+import java.util.LinkedList;
 import jolaria.Position;
+import java.io.*;
+import java.io.PrintWriter;
 /**
  *
  * @author Materson
  */
-public class World {
+public class World  {
 //#include"IncludeOrganisms.h"
 
     private final int height, width;
@@ -23,7 +27,7 @@ public class World {
     private String[] comments = new String[10];
     private int comment_i;
     private Organism[][] map;
-    private Organism[] order;
+    private List<Organism>[] order;
     private static final int COMMENTS_AMOUNT = 10;
     private static final int FILL_RATIO = 5;
     private RightBar menu;
@@ -36,10 +40,13 @@ public class World {
             map = new Organism[width][height];
             comment_i = 0;
             human = false;
+            order= new List[8];
+            for(int i=0; i< order.length; i++)
+            {
+                order[i] = new LinkedList<Organism>();
+            }
             fillWorld();
             drawWorld();
-            order = new Organism[width*height];
-            setOrder();
     }
     
     public Organism getOrganism(int x, int y)
@@ -75,19 +82,32 @@ public class World {
 
     public void nextTurn()
     {
-        int num = orgNum;
-        for (int i = 0; i < num; i++)
+        for (int i = 7; i >= 0; i--)
         {
+            if(order[i].size() == 0)
+            {
+                continue;
+            }
+            
+            for(int j=0; j<order[i].size(); j++)
+            {
                 if (order[i] != null)
-                        order[i].increaseOld();
+                        order[i].get(j).increaseOld();
+            }
         }
-
-        for (int i = 0; i < num; i++)
+        
+        for (int i = 7; i >= 0; i--)
         {
-                if(order[i] != null)
-                        order[i].action();
+            if(order[i].size() == 0)
+            {
+                continue;
+            }
+            
+            for(int j=0; j<order[i].size(); j++)
+            {
+                order[i].get(j).action();
+            }
         }
-        setOrder();
     }
 
     public void drawWorld()
@@ -168,36 +188,47 @@ public class World {
             {
             case 'w':
                     map[x][y] = new Wolf(9, 5, this, x, y);
+                    order[5].add(map[x][y]);
                     break;
             case 's':
                     map[x][y] = new Sheep(4, 4, this, x, y);
+                    order[4].add(map[x][y]);
                     break;
             case 'f':
                     map[x][y] = new Fox(3, 7, this, x, y);
+                    order[7].add(map[x][y]);
                     break;
             case 't':
                     map[x][y] = new Turtle(2, 1, this, x, y);
+                    order[1].add(map[x][y]);
                     break;
             case 'a':
                     map[x][y] = new Antelope(4, 4, this, x, y);
+                    order[4].add(map[x][y]);
                     break;
             case 'H':
                     map[x][y] = new Human(5, 5, this, x, y);
+                    order[5].add(map[x][y]);
                     break;
             case 'g':
                     map[x][y] = new Grass(0, this, x, y);
+                    order[0].add(map[x][y]);
                     break;
             case 'm':
                     map[x][y] = new Milk(0, this, x, y);
+                    order[0].add(map[x][y]);
                     break;
             case 'G':
                     map[x][y] = new Guarana(0, this, x, y);
+                    order[0].add(map[x][y]);
                     break;
             case 'b':
                     map[x][y] = new Berry(99, this, x, y);
+                    order[0].add(map[x][y]);
                     break;
             case 'X':
                     map[x][y] = new Borscht(10, this, x, y);
+                    order[0].add(map[x][y]);
                     break;
             default:
                     map[x][y] = null;
@@ -255,11 +286,12 @@ public class World {
     {
         if(map[org.getX()][org.getY()] == org)
                     map[org.getX()][org.getY()] = null;
-        for (int i = 0; i < orgNum; i++)
+        int activity = org.getActivity();
+        for (int i = 0; i < order[activity].size(); i++)
         {
-                if (order[i] == org)
+                if (order[activity].get(i) == org)
                 {
-                        order[i] = null;
+                        order[activity].remove(i);
                         break;
                 }
         }
@@ -273,20 +305,6 @@ public class World {
                     org = map[x][y];
             }
             delOrganism(org);            
-    }
-
-    public void setOrder()
-    {
-            int k = 0;
-            for (int i = 0; i < height; i++)
-            {
-                    for (int j = 0; j < width; j++)
-                    {
-                            order[k++] = map[j][i];
-                    }
-            }
-
-            //qsort(order, height*width, sizeof(Organism*), sortOrder);
     }
 
     //public void sortOrder(void or1, void or2)
@@ -386,15 +404,43 @@ public class World {
             }
     }
 
-    //public void save()
-    //{
-    //	ofstream file("save.txt");
-    //	file << width << " " << height<<endl;
-    //	for (int i = 0; i < orgNum; i++)
-    //	{
-    //
-    //	}
-    //
-    //}
+    public String prepareSave()
+    {
+    	String text = new String();
+        text += width+" "+height+" "+orgNum;
+        
+        for (int i = 7; i >= 0; i--)
+        {
+            if(order[i].size() == 0)
+            {
+                continue;
+            }
+            
+            for(int j=0; j<order[i].size(); j++)
+            {
+                Organism org = order[i].get(j);
+                text += " "+String.valueOf(org.getImage()) + " " + String.valueOf(org.getX()) + " " + String.valueOf(org.getY()) + " " + String.valueOf(org.getPower()) + " " + String.valueOf(i) + " " + String.valueOf(org.getOld());
+                if(org instanceof Human)
+                {
+                    text += org.getSkill();
+                }
+            }
+        }
+        
+        return text;
+    }
+    
+    public void saveFile()
+    {
+        try{
+            PrintWriter file = new PrintWriter("save.txt");
+            file.println(prepareSave());
+            file.close();
+            
+        } catch(IOException e)
+        {
+            break;
+        }
+    }
 
 }

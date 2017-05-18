@@ -71,6 +71,11 @@ public abstract class Organism {
             return old;
     }
 
+    public int getSkill()
+    {
+            return skill;
+    }
+    
     public int getPower()
     {
             return power;

@@ -19,7 +19,7 @@ public class RightBar extends JPanel implements ActionListener{
         private static final int heightPanel = 700, widthPanel = 300;
         private int widthMap, heightMap;
         private JTextField widthField, heightField;
-        private JButton createMapButton, nextButton;
+        private JButton createMapButton, nextButton, saveButton, loadButton;
         private JTextArea commentArea = new JTextArea(5, 20);
         Graphic window;
         
@@ -130,6 +130,16 @@ public class RightBar extends JPanel implements ActionListener{
             nextButton = new JButton("Nastepna tura");
             nextButton.addActionListener(this);
             nextTurnPanel.add(nextButton);
+            info.add(nextTurnPanel);
+            
+            JPanel saveLoad = new JPanel();
+            saveLoad.setLayout(new GridLayout(1,2));
+            saveButton = new JButton("Nastepna tura");
+            loadButton = new JButton("Nastepna tura");
+            saveButton.addActionListener(this);
+            loadButton.addActionListener(this);
+            nextTurnPanel.add(saveButton);
+            nextTurnPanel.add(loadButton);
             info.add(nextTurnPanel);
             
             commentArea.setEditable(false);
