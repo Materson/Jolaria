@@ -11,7 +11,7 @@ import javax.swing.*;
  * @author Materson
  */
 public class Graphic extends JFrame {
-    Map map;
+    public Map map;
     private RightBar menu;
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
     private static final String UP = "up";
@@ -29,8 +29,6 @@ public class Graphic extends JFrame {
         
         menu = new RightBar(this);
         add(menu, BorderLayout.LINE_END);
-//        JPanel map = new Map(25,25);
-//        add(map, BorderLayout.LINE_START);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

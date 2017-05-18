@@ -85,6 +85,16 @@ public abstract class Organism {
     {
             power = x;
     }
+    
+    public void setOld(int x)
+    {
+            old = x;
+    }
+    
+    public void setSkill(int x)
+    {
+            skill = x;
+    }
 
     public void randMove(Position pos, int range)
     {

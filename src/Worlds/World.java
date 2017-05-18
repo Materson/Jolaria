@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import jolaria.Position;
 import java.io.*;
 import java.io.PrintWriter;
+import java.util.Scanner;
 /**
  *
  * @author Materson
@@ -21,7 +22,7 @@ import java.io.PrintWriter;
 public class World  {
 //#include"IncludeOrganisms.h"
 
-    private final int height, width;
+    private int height, width;
     private int orgNum = 0;
     private boolean human, play;
     private String[] comments = new String[10];
@@ -410,7 +411,7 @@ public class World  {
     public String prepareSave()
     {
     	String text = new String();
-        text += width+" "+height+" "+orgNum;
+        text += width+" "+height+" "+orgNum+" ";
         
         for (int i = 7; i >= 0; i--)
         {
@@ -422,10 +423,10 @@ public class World  {
             for(int j=0; j<order[i].size(); j++)
             {
                 Organism org = order[i].get(j);
-                text += " "+String.valueOf(org.getImage()) + " " + String.valueOf(org.getX()) + " " + String.valueOf(org.getY()) + " " + String.valueOf(org.getPower()) + " " + String.valueOf(i) + " " + String.valueOf(org.getOld());
+                text += String.valueOf(org.getImage()) + " " + String.valueOf(org.getX()) + " " + String.valueOf(org.getY()) + " " + String.valueOf(org.getPower()) + " " + String.valueOf(org.getOld()) + " ";
                 if(org instanceof Human)
                 {
-                    text += org.getSkill();
+                    text += org.getSkill() + " ";
                 }
             }
         }
@@ -445,5 +446,62 @@ public class World  {
 //            break;
         }
     }
+    
+    public void loadFile() throws FileNotFoundException
+    {
+        String text = "";
+        try{
+            Scanner file = new Scanner(new File("save.txt"));
+            text = file.nextLine();
+            load(text);
+            file.close();
+        } catch(IOException e)
+        {
+//            break;
+        }
+    }
+    
+    public void load(String text)
+    {
+        String arr[] = text.split(" ");
+        width = Integer.parseInt(arr[0]);
+        height = Integer.parseInt(arr[1]);
+        orgNum = Integer.parseInt(arr[2]);
+        
+        map = new Organism[width][height];
+        order= new List[8];
+        for(int i=0; i< order.length; i++)
+        {
+            order[i] = new LinkedList<Organism>();
+        }
+        
+        int k = orgNum;
+        boolean human = false;
+        for(int j=0; j<k; j++)
+        {
+            int i;
+            if(human)
+                i=4 + j*5;
+            else
+                i=3 + j*5;
+            char org = arr[i++].charAt(0);
+            int x = Integer.parseInt(arr[i++]);
+            int y = Integer.parseInt(arr[i++]);
+            int power = Integer.parseInt(arr[i++]);
+            int old = Integer.parseInt(arr[i++]);
+
+            addOrganism(org, x, y);
+            map[x][y].setPower(power);
+            map[x][y].setOld(old);
+            if(map[x][y] instanceof Human)
+            {
+                int skill = Integer.parseInt(arr[i]);
+                map[x][y].setSkill(skill);
+                human = true;
+            }
+        }
+        orgNum = k;
+    }
+    
 
 }

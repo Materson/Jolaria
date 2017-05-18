@@ -21,6 +21,7 @@ public class RightBar extends JPanel implements ActionListener{
         private JTextField widthField, heightField;
         private JButton createMapButton, nextButton, saveButton, loadButton, closeButton;
         private JTextArea commentArea = new JTextArea(15, 20);
+        private JPanel info,nextTurnPanel;
         Graphic window;
         
 	public RightBar(Graphic window) {
@@ -93,16 +94,11 @@ public class RightBar extends JPanel implements ActionListener{
                 
                 if(goodData)
                 {
-                    SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        window.getContentPane().removeAll();
-                        window.createMap(widthMap,heightMap);
-                        informations();
-                        window.revalidate();
-                        window.repaint();
-                    }
-                    });
+                    
+                    window.getContentPane().removeAll();
+                    window.createMap(widthMap,heightMap);
+                    informations();
+                    window.revalidate();
                 }
             }
             else if(source == nextButton)
@@ -113,11 +109,25 @@ public class RightBar extends JPanel implements ActionListener{
             {
                 window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             }
+            else if(source == saveButton)
+            {
+                window.map.save();
+            }
+            else if(source == loadButton)
+            {
+                window.map.load();
+                remove(nextTurnPanel);   
+                widthMap = window.map.getMapWidth();
+                heightMap = window.map.getMapHeight();
+//                informations();
+                window.revalidate();
+                
+            }
         }
         
         public void informations()
         {
-            JPanel info = new JPanel();
+            info = new JPanel();
             info.setPreferredSize(new Dimension(widthPanel, heightPanel));
             info.setBackground(Color.gray);
             window.add(info, BorderLayout.LINE_END);
@@ -130,7 +140,7 @@ public class RightBar extends JPanel implements ActionListener{
             sizeInfo.add(heightLabel);
             info.add(sizeInfo);
             
-            JPanel nextTurnPanel = new JPanel();
+            nextTurnPanel = new JPanel();
             nextButton = new JButton("Nastepna tura");
             nextButton.addActionListener(this);
             nextTurnPanel.add(nextButton);
@@ -145,7 +155,7 @@ public class RightBar extends JPanel implements ActionListener{
             loadButton.addActionListener(this);
             nextTurnPanel.add(saveButton);
             nextTurnPanel.add(loadButton);
-        info.add(nextTurnPanel);
+            info.add(nextTurnPanel);
             closeButton = new JButton("Zamkinj");
             closeButton.addActionListener(this);
             info.add(closeButton, BorderLayout.PAGE_END);

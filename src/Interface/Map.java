@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 import java.awt.geom.*;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -25,21 +26,22 @@ public class Map extends JPanel{
         private World jolaria;
         private int width, height;
         private int map_width=700, map_height=700;
-        private RightBar menu;
-        JButton[][] buttons;
+        private JPanel mapJPanel;
+        private JButton[][] buttons;
         
 	public Map(int w, int h, RightBar menu) {
-		setPreferredSize(new Dimension(map_width, map_height));
                 width = w;
                 height = h;
-                this.menu = menu;
                 setBackground(Color.BLUE);
-                setLayout(new GridLayout(h,w));
+                
                 jolaria = new World(w, h, menu);
                 createButtons();
 	}
 
 	protected void createButtons() {
+                mapJPanel = new JPanel();
+                mapJPanel.setPreferredSize(new Dimension(map_width, map_height));
+                mapJPanel.setLayout(new GridLayout(height,width));
                 buttons = new JButton[width][height];
                 for(int i=0; i<height; i++)
                 {
@@ -49,10 +51,11 @@ public class Map extends JPanel{
                         buttons[j][i].setBackground(Color.WHITE);
                         colorButton(j,i);
                         
-                        add(buttons[j][i]);
+                        mapJPanel.add(buttons[j][i], BorderLayout.CENTER);
                         
                     }
                 }
+                add(mapJPanel);
 	}
         
         public void nextTurn(int dx, int dy)
@@ -67,7 +70,6 @@ public class Map extends JPanel{
                 for(int j = 0; j < width; j++) {
                    buttons[j][i].setText(String.valueOf(jolaria.checkPlace(j, i)));
                    colorButton(j,i);
-                   add(buttons[j][i]);
                 }
              }
         }
@@ -91,6 +93,39 @@ public class Map extends JPanel{
             {
                 buttons[j][i].setBackground(Color.WHITE);
             }
+        }
+        
+        public void save()
+        {
+            jolaria.saveFile();
+        }
+        
+        public void load()
+        {
+            try
+            {
+                jolaria.loadFile();
+                height = jolaria.getHeight();
+                width = jolaria.getWidth();
+                remove(mapJPanel);
+                createButtons();
+                repaint();
+                
+            }
+            catch(IOException e)
+            {
+                
+            }
+        }
+        
+        public int getMapWidth()
+        {
+            return width;
+        }
+        
+        public int getMapHeight()
+        {
+            return height;
         }
     }
  

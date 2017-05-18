@@ -65,7 +65,6 @@ public class Human extends Animal{
                 {
                         world.addComment(String.valueOf(image), "actived fire");
                         skill = 5;
-                        image = 'O';
                         fire();
                 }
                 else if (skill < 0)
